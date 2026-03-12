@@ -23,7 +23,7 @@ jobs:
           format: "HTML"
 
       - name: Build Docker Image
-        run: docker build -t devops-node-app:latest .
+        run: docker build -t devops-node-app:latest ./app
 
       - name: Trivy Scan
         uses: aquasecurity/trivy-action@master
