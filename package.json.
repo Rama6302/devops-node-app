@@ -1,0 +1,12 @@
+{
+  "name": "rama6302-clothing-app",
+  "version": "1.0.0",
+  "description": "Simple node application for Rama6302's clothing brand.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Rama6302",
+  "license": "ISC",
+  "dependencies": {}
+}
