@@ -22,29 +22,29 @@ jobs:
           format: "HTML"
 
       - name: Build Docker Image
-        # Define the image name and point to the current directory (Dockerfile location)
-        # !!! CHANGE 'YOUR_DOCKERHUB_USERNAME' BELOW TO YOUR ACTUAL DOCKERHUB USERNAME !!!
-        run: docker build -t YOUR_DOCKERHUB_USERNAME/devops-node-app:latest .
+        # !!! I have updated this line to use your all-lowercase Docker Hub username !!!
+        # The syntax below uses the secret you already set up.
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/devops-node-app:latest .
 
       - name: Trivy Scan
+        # Aquasecurity's Trivy tool scans the image for vulnerabilities.
         uses: aquasecurity/trivy-action@master
         with:
-          # Scan the image created in the previous step
-          # !!! CHANGE 'YOUR_DOCKERHUB_USERNAME' BELOW TO YOUR ACTUAL DOCKERHUB USERNAME !!!
-          image-ref: 'YOUR_DOCKERHUB_USERNAME/devops-node-app:latest'
+          # !!! I have updated this line to scan the correct image name !!!
+          image-ref: '${{ secrets.DOCKERHUB_USERNAME }}/devops-node-app:latest'
           format: 'table'
           # If high or critical vulnerabilities are found, the build will fail.
           exit-code: '1'
           severity: 'CRITICAL,HIGH'
 
       - name: Login to DockerHub
+        # Re-use the DockerHub login action from image_3.png
         uses: docker/login-action@v3
         with:
-          # Use the secrets you configured in Phase 2
+          # Use the secrets you successfully set up in image_5.png
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Push Image to DockerHub
-        # Push the final image to your DockerHub repository
-        # !!! CHANGE 'YOUR_DOCKERHUB_USERNAME' BELOW TO YOUR ACTUAL DOCKERHUB USERNAME !!!
-        run: docker push YOUR_DOCKERHUB_USERNAME/devops-node-app:latest
+        # !!! I have updated this line to push to your specific repository !!!
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/devops-node-app:latest
